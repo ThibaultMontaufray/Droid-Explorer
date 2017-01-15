@@ -1,5 +1,5 @@
 language: csharp
-solution: project/Droid_Explorer.sln
+solution: Project/Droid_Explorer.sln
 mono: latest
 notifications:
   email: false

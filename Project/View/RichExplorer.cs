@@ -85,7 +85,6 @@ namespace Explorer
         private RibbonCheckBox _fileExtentionDisplay;
         private RibbonCheckBox _displayHidenComponents;
         private RibbonButton _hideSelectedComponents;
-        private RibbonButton _options;
         #endregion
 
         #region Properties

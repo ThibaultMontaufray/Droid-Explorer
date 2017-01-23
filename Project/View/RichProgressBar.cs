@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 
-namespace Explorer
+namespace Droid_Explorer
 {
     public class RichProgressBar : ProgressBar
     {

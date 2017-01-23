@@ -9,7 +9,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Explorer
+namespace Droid_Explorer
 {
     /// <summary>
     /// Description of MainForm.

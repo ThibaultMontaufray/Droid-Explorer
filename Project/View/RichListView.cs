@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 
-namespace Explorer
+namespace Droid_Explorer
 {
     public class RichListView : Panel
     {

@@ -8,7 +8,7 @@ using System.Drawing;
 using System.Security.AccessControl;
 using System.Security.Principal;
 
-namespace Explorer
+namespace Droid_Explorer
 {
     public class PanelTools : Panel
     {
@@ -67,6 +67,8 @@ namespace Explorer
             _listView = new ListView();
             _listView.Dock = DockStyle.Fill;
             _listView.View = View.Tile;
+            _listView.DoubleClick += _listView_DoubleClick;
+            _listView.MouseClick += _listView_MouseClick;
             _listView.LargeImageList = _imageList;
             _listView.SmallImageList = _imageList;
             _listView.StateImageList = _imageList;
@@ -77,8 +79,11 @@ namespace Explorer
 
             _listViewDisk = new RichListView();
             _listViewDisk.Dock = DockStyle.Fill;
-            _listViewDisk.IconList = _gui.imageListView32;
+            _listViewDisk.IconList = _gui.imageList48;
             _listViewDisk.Display = View.Tile;
+            _listViewDisk.DoubleClick += _listViewDisk_DoubleClick;
+            _listViewDisk.MouseClick += _listViewDisk_MouseClick;
+            _listViewDisk.BackColor = Color.White;
             _listViewDisk.ComponentSize = RichListViewItem.Format.LARGE;
             _sp.Panel2.Controls.Add(this._listViewDisk);
 
@@ -111,7 +116,8 @@ namespace Explorer
                         richLV.Details.Add(d);
                     }
 
-                    richLV.ImageIndex = _listViewDisk.IconList.Images.IndexOfKey("disk");
+                    // TODO : detect correctly the os folder
+                    richLV.ImageIndex = richLV.Text.Contains(Environment.SystemDirectory.Split('\\')[0]) ? _listViewDisk.IconList.Images.IndexOfKey("diskOs") : _listViewDisk.IconList.Images.IndexOfKey("disk");
                     richLV.Group = lvg_fixed.Header;
                     countFixed++;
                 }
@@ -138,7 +144,7 @@ namespace Explorer
                 }
                 else
                 {
-                    richLV.ImageIndex = _listViewDisk.IconList.Images.IndexOfKey("cd");
+                    richLV.ImageIndex = (richLV.Text.ToLower().Contains("cd") || richLV.Text.ToLower().Contains("dvd")) ? _listViewDisk.IconList.Images.IndexOfKey("dvd") : _listViewDisk.IconList.Images.IndexOfKey("sd");
                     richLV.Group = lvg_removable_storage.Header;
                     countRemovable++;
                 }
@@ -213,22 +219,45 @@ namespace Explorer
         }
         private void LoadTreeView()
         {
+            TreeNode node;
+
             _treeView = new TreeView();
             _treeView.Dock = DockStyle.Fill;
             _treeView.ImageList = _gui.imageListTreeview;
+            _treeView.BeforeExpand += _treeView_BeforeExpand;
             _treeView.AfterSelect += new TreeViewEventHandler(_treeView_AfterSelect);
             _treeView.Font = new System.Drawing.Font("Arial", 9, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 
             _rootNode = new TreeNode("Computer", _treeView.ImageList.Images.IndexOfKey("computer"), _treeView.ImageList.Images.IndexOfKey("computer"));
 
-            DriveInfo[] drives = DriveInfo.GetDrives();
+            foreach (KeyValuePair<string, string> specialDocument in FilesAdmin.SpecialFolders)
+            {
+                try
+                {
+                    node = new TreeNode(specialDocument.Key, _treeView.ImageList.Images.IndexOfKey(specialDocument.Key.ToLower()), _treeView.ImageList.Images.IndexOfKey(specialDocument.Key.ToLower()));
+                    LoadSubNodes(ref node, specialDocument.Value);
+                    _rootNode.Nodes.Add(node);
+                }
+                catch (Exception exp)
+                {
+                    Tools4Libraries.Log.write("[ ERR 0000 ] Error in special document loading : " + exp.Message);
+                }
+            }
 
+
+            DriveInfo[] drives = DriveInfo.GetDrives();
             foreach (MountPoint mp in _toolControler.ListDrivers)
             {
-                TreeNode node;
                 if (mp.type == DriveType.Fixed)
                 {
-                    node = new TreeNode(mp.text, _treeView.ImageList.Images.IndexOfKey("disk"), _treeView.ImageList.Images.IndexOfKey("disk"));
+                    if (mp.text.Contains(Environment.SystemDirectory.Split('\\')[0]))
+                    {
+                        node = new TreeNode(mp.text, _treeView.ImageList.Images.IndexOfKey("diskOs"), _treeView.ImageList.Images.IndexOfKey("diskOs"));
+                    }
+                    else
+                    { 
+                        node = new TreeNode(mp.text, _treeView.ImageList.Images.IndexOfKey("disk"), _treeView.ImageList.Images.IndexOfKey("disk"));
+                    }
                     LoadSubNodes(ref node, mp.letter + ":\\");
                 }
                 else if (mp.type == DriveType.Network)
@@ -285,6 +314,10 @@ namespace Explorer
                 node.ImageIndex = _treeView.ImageList.Images.IndexOfKey("folder_lock");
                 node.SelectedImageIndex = _treeView.ImageList.Images.IndexOfKey("folder_lock");
                 MessageBox.Show(path + " is not accessible.\n\n Access is denied.", "Location is not available", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            }
+            catch (Exception exp)
+            {
+                Tools4Libraries.Log.write("[ ERR 0000 ] Error in nodes loading : " + exp.Message);
             }
         }
         private void LoadPreview()
@@ -356,13 +389,32 @@ namespace Explorer
                         nodeExplorer = nodeExplorer.Parent;
                     }
                     while (nodeExplorer != _rootNode);
-                    _toolControler.CurrentPath = path.ToString();
+                    _toolControler.CurrentPath = FilesAdmin.CleanPath(path.ToString());
 
                     TreeNode tn = _treeView.SelectedNode;
                     LoadSubNodes(ref tn, _toolControler.CurrentPath);
                     _treeView.SelectedNode.Expand();
                     LoadPreview();
                 }
+            }
+        }
+        private void OpenFile()
+        {
+            if (_listView.SelectedItems.Count != 1) return;
+            FilesAdmin.LaunchDefaultProgram(_treeView.SelectedNode.FullPath, _listView.SelectedItems[0].Text);
+        }
+        private void LaunchContextMenu(int x, int y)
+        {
+            try
+            {
+                ShellContextMenu ctxMnu = new ShellContextMenu();
+                FileInfo[] arrFI = new FileInfo[1];
+                arrFI[0] = new FileInfo(FilesAdmin.GetFile(_treeView.SelectedNode.FullPath, _listView.SelectedItems[0].Text));
+                ctxMnu.ShowContextMenu(arrFI, this.PointToScreen(new Point(x, y)));
+            }
+            catch (Exception exp)
+            {
+                Tools4Libraries.Log.write("[ ERR 0000 ] Error in context menu execution : " + exp.Message);
             }
         }
         #endregion
@@ -386,6 +438,45 @@ namespace Explorer
         private void _treeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
             RefreshExplorer();
+        }
+        private void _listView_DoubleClick(object sender, EventArgs e)
+        {
+            OpenFile();
+        }
+        private void _listViewDisk_DoubleClick(object sender, EventArgs e)
+        {
+            OpenFile();
+        }
+        private void _listView_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                LaunchContextMenu(e.X, e.Y);
+            }
+        }
+        private void _listViewDisk_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                LaunchContextMenu(e.X, e.Y);
+            }
+        }
+        private void _treeView_BeforeExpand(object sender, TreeViewCancelEventArgs e)
+        {
+            if (_treeView.SelectedNode != null)
+            { 
+                TreeNode tn = _treeView.SelectedNode;
+                LoadSubNodes(ref tn, _toolControler.CurrentPath);
+
+                TreeNode childNode = tn.FirstNode;
+                while (childNode != null)
+                {
+                    LoadSubNodes(ref childNode, _toolControler.CurrentPath + childNode.Text);
+                    childNode.Collapse();
+                    childNode = childNode.NextNode;
+                }
+                _treeView.Invalidate();
+            }
         }
         #endregion
     }

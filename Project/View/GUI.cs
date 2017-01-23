@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace Explorer
+namespace Droid_Explorer
 {
     public partial class GUI : Form
     {

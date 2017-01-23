@@ -16,7 +16,7 @@
 
 
 
-namespace Explorer
+namespace Droid_Explorer
 {
 
     partial class RichExplorer
@@ -75,7 +75,7 @@ namespace Explorer
         {
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.buttonTools = new System.Windows.Forms.Button();
-            this.panelTools1 = new Explorer.PanelTools();
+            this.panelTools1 = new Droid_Explorer.PanelTools();
             this.SuspendLayout();
             // 
             // buttonTools

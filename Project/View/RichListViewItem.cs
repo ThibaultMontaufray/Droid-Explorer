@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 
-namespace Explorer
+namespace Droid_Explorer
 {
     public struct Detail
     {

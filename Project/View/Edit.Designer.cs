@@ -1,4 +1,4 @@
-﻿namespace Explorer
+﻿namespace Droid_Explorer
 {
     partial class Edit
     {

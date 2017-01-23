@@ -1,4 +1,4 @@
-﻿namespace Explorer
+﻿namespace Droid_Explorer
 {
     partial class GUI
     {
@@ -31,7 +31,8 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GUI));
             this.imageListTreeview = new System.Windows.Forms.ImageList(this.components);
-            this.imageListView32 = new System.Windows.Forms.ImageList(this.components);
+            this.imageList32 = new System.Windows.Forms.ImageList(this.components);
+            this.imageList48 = new System.Windows.Forms.ImageList(this.components);
             this.SuspendLayout();
             // 
             // imageListTreeview
@@ -39,19 +40,42 @@
             this.imageListTreeview.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListTreeview.ImageStream")));
             this.imageListTreeview.TransparentColor = System.Drawing.Color.Transparent;
             this.imageListTreeview.Images.SetKeyName(0, "folder");
-            this.imageListTreeview.Images.SetKeyName(1, "cd");
-            this.imageListTreeview.Images.SetKeyName(2, "disk");
-            this.imageListTreeview.Images.SetKeyName(3, "computer");
-            this.imageListTreeview.Images.SetKeyName(4, "network");
+            this.imageListTreeview.Images.SetKeyName(1, "bureau");
+            this.imageListTreeview.Images.SetKeyName(2, "documents");
+            this.imageListTreeview.Images.SetKeyName(3, "download");
+            this.imageListTreeview.Images.SetKeyName(4, "musique");
+            this.imageListTreeview.Images.SetKeyName(5, "computer");
+            this.imageListTreeview.Images.SetKeyName(6, "videos");
+            this.imageListTreeview.Images.SetKeyName(7, "network");
+            this.imageListTreeview.Images.SetKeyName(8, "disk");
+            this.imageListTreeview.Images.SetKeyName(9, "diskOs");
+            this.imageListTreeview.Images.SetKeyName(10, "cd");
+            this.imageListTreeview.Images.SetKeyName(11, "images");
             // 
-            // imageListView32
+            // imageList32
             // 
-            this.imageListView32.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListView32.ImageStream")));
-            this.imageListView32.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageListView32.Images.SetKeyName(0, "cd");
-            this.imageListView32.Images.SetKeyName(1, "network");
-            this.imageListView32.Images.SetKeyName(2, "folder");
-            this.imageListView32.Images.SetKeyName(3, "disk");
+            this.imageList32.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList32.ImageStream")));
+            this.imageList32.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList32.Images.SetKeyName(0, "cd");
+            this.imageList32.Images.SetKeyName(1, "network");
+            this.imageList32.Images.SetKeyName(2, "folder");
+            this.imageList32.Images.SetKeyName(3, "disk");
+            // 
+            // imageList48
+            // 
+            this.imageList48.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList48.ImageStream")));
+            this.imageList48.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList48.Images.SetKeyName(0, "disk");
+            this.imageList48.Images.SetKeyName(1, "diskOs");
+            this.imageList48.Images.SetKeyName(2, "dvd");
+            this.imageList48.Images.SetKeyName(3, "folderDesktop");
+            this.imageList48.Images.SetKeyName(4, "folderDocument");
+            this.imageList48.Images.SetKeyName(5, "folderDownload");
+            this.imageList48.Images.SetKeyName(6, "folderImage");
+            this.imageList48.Images.SetKeyName(7, "folderMusic");
+            this.imageList48.Images.SetKeyName(8, "folderVideo");
+            this.imageList48.Images.SetKeyName(9, "network");
+            this.imageList48.Images.SetKeyName(10, "sd");
             // 
             // GUI
             // 
@@ -67,7 +91,7 @@
         #endregion
 
         public System.Windows.Forms.ImageList imageListTreeview;
-        public System.Windows.Forms.ImageList imageListView32;
-
+        public System.Windows.Forms.ImageList imageList32;
+        public System.Windows.Forms.ImageList imageList48;
     }
 }

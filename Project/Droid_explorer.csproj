@@ -7,8 +7,8 @@
     <ProjectGuid>{0BE9DABD-71B3-4B38-99F9-D88628426D91}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Assistant</RootNamespace>
-    <AssemblyName>Droid_explorer</AssemblyName>
+    <RootNamespace>Droid_Explorer</RootNamespace>
+    <AssemblyName>Droid_Explorer</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -68,6 +68,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controler\FilesAdmin.cs" />
+    <Compile Include="Controler\ShellContextMenu.cs" />
     <Compile Include="Controler\ToolControler.cs" />
     <Compile Include="View\Edit.cs">
       <SubType>Form</SubType>

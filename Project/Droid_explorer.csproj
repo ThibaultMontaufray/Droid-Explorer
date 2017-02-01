@@ -38,10 +38,28 @@
     <StartupObject>
     </StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>ExplorerServOdroid.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ControlzEx, Version=2.1.4.13, Culture=neutral, PublicKeyToken=f08b075e934b7045, processorArchitecture=MSIL">
       <HintPath>packages\ControlzEx.2.1.4.13\lib\net45\ControlzEx.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Droid_Cryptographie">
+      <HintPath>..\..\TOBI\lib\4.0\Droid_Cryptographie.dll</HintPath>
+    </Reference>
+    <Reference Include="Droid_Database">
+      <HintPath>..\..\TOBI\lib\4.0\Droid_Database.dll</HintPath>
+    </Reference>
+    <Reference Include="Droid_litterature">
+      <HintPath>..\..\TOBI\lib\4.0\Droid_litterature.dll</HintPath>
+    </Reference>
+    <Reference Include="Droid_Tobi">
+      <HintPath>..\..\TOBI\lib\4.0\Droid_Tobi.dll</HintPath>
+    </Reference>
+    <Reference Include="Droid_web">
+      <HintPath>..\..\TOBI\lib\4.0\Droid_web.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -148,6 +166,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Model\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ExplorerServOdroid.ico" />
+    <Content Include="Explorer_servOdroid.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

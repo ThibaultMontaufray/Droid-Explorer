@@ -8,6 +8,7 @@
 */
 using System;
 using System.Windows.Forms;
+using Droid_Tobi;
 
 namespace Droid_Explorer
 {
@@ -85,6 +86,8 @@ namespace Droid_Explorer
         private RibbonCheckBox _fileExtentionDisplay;
         private RibbonCheckBox _displayHidenComponents;
         private RibbonButton _hideSelectedComponents;
+
+        private RibbonTabTobi _tobiTab;
         #endregion
 
         #region Properties
@@ -113,6 +116,17 @@ namespace Droid_Explorer
             BuildTabWelcome();
             BuildTabSharing();
             BuildTabDisplay();
+            BuildTabTobi();
+        }
+        private void BuildTabTobi()
+        {
+            _tobiTab = new RibbonTabTobi();
+            _ribbon.Tabs.Add(_tobiTab);
+
+            _tobiTab.TobiOut.TextBoxWidth = _ribbon.Width - 200;
+            _tobiTab.TobiIn.TextBoxWidth = _ribbon.Width - 200;
+
+            _ribbon.Resize += _ribbon_Resize;
         }
         private void BuildTabWelcome()
         {
@@ -463,6 +477,12 @@ namespace Droid_Explorer
         #endregion
 
         #region Event
+
+        private void _ribbon_Resize(object sender, EventArgs e)
+        {
+            _tobiTab.TobiOut.TextBoxWidth = _ribbon.Width - 200;
+            _tobiTab.TobiIn.TextBoxWidth = _ribbon.Width - 200;
+        }
         #endregion
     }
 }

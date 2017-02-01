@@ -73,6 +73,7 @@ namespace Droid_Explorer
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RichExplorer));
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.buttonTools = new System.Windows.Forms.Button();
             this.panelTools1 = new Droid_Explorer.PanelTools();
@@ -99,6 +100,7 @@ namespace Droid_Explorer
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(621, 530);
             this.Controls.Add(this.panelTools1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(370, 500);
             this.Name = "RichExplorer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

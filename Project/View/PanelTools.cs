@@ -522,7 +522,6 @@ namespace Droid_Explorer
                         childNode = childNode.NextNode;
                     }
                     _treeView.Invalidate();
-
                 }
             }
         }

@@ -65,7 +65,7 @@ namespace Droid_Explorer
             }
             catch (Exception exp)
             {
-                Tools4Libraries.Log.write("[ ERR 0000 ] Error while executing the program : " + exp.Message);
+                Tools4Libraries.Log.Write("[ ERR 0000 ] Error while executing the program : " + exp.Message);
             }
         }
         public static string CleanPath(string path)

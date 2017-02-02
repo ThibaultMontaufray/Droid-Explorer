@@ -223,8 +223,13 @@ namespace Droid_Explorer
 
             _treeView = new TreeView();
             _treeView.Dock = DockStyle.Fill;
+            _treeView.ShowRootLines = false;
+            _treeView.ShowLines = false;
             _treeView.ImageList = _gui.imageListTreeview;
             _treeView.BeforeExpand += _treeView_BeforeExpand;
+            _treeView.MouseClick += _treeView_MouseClick;
+            _treeView.MouseHover += _treeView_MouseHover;
+            _treeView.MouseLeave += _treeView_MouseLeave;
             _treeView.AfterSelect += new TreeViewEventHandler(_treeView_AfterSelect);
             _treeView.Font = new System.Drawing.Font("Arial", 9, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 
@@ -240,7 +245,7 @@ namespace Droid_Explorer
                 }
                 catch (Exception exp)
                 {
-                    Tools4Libraries.Log.write("[ ERR 0000 ] Error in special document loading : " + exp.Message);
+                    Tools4Libraries.Log.Write("[ ERR 0000 ] Error in special document loading : " + exp.Message);
                 }
             }
 
@@ -313,11 +318,11 @@ namespace Droid_Explorer
             {
                 node.ImageIndex = _treeView.ImageList.Images.IndexOfKey("folder_lock");
                 node.SelectedImageIndex = _treeView.ImageList.Images.IndexOfKey("folder_lock");
-                MessageBox.Show(path + " is not accessible.\n\n Access is denied.", "Location is not available", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                //MessageBox.Show(path + " is not accessible.\n\n Access is denied.", "Location is not available", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
             catch (Exception exp)
             {
-                Tools4Libraries.Log.write("[ ERR 0000 ] Error in nodes loading : " + exp.Message);
+                Tools4Libraries.Log.Write("[ ERR 0000 ] Error in nodes loading : " + exp.Message);
             }
         }
         private void LoadPreview()
@@ -336,6 +341,19 @@ namespace Droid_Explorer
 
             try
             {
+                foreach (var folder in dir.GetDirectories())
+                {
+                    item = new ListViewItem(folder.Name, 1);
+                    ListViewItem.ListViewSubItem subItem = new ListViewItem.ListViewSubItem(item, "test");
+                    item.SubItems.Add(subItem);
+
+                    if (!_imageList.Images.ContainsKey("folder"))
+                    {
+                        _imageList.Images.Add("folder", _gui.imageList32.Images[_gui.imageList32.Images.IndexOfKey("folder")]);
+                    }
+                    item.ImageKey = "folder";
+                    _listView.Items.Add(item);
+                }
                 foreach (System.IO.FileInfo file in dir.GetFiles())
                 {
                     Icon iconForFile = SystemIcons.WinLogo;
@@ -414,7 +432,7 @@ namespace Droid_Explorer
             }
             catch (Exception exp)
             {
-                Tools4Libraries.Log.write("[ ERR 0000 ] Error in context menu execution : " + exp.Message);
+                Tools4Libraries.Log.Write("[ ERR 0000 ] Error in context menu execution : " + exp.Message);
             }
         }
         #endregion
@@ -461,6 +479,14 @@ namespace Droid_Explorer
                 LaunchContextMenu(e.X, e.Y);
             }
         }
+        private void _treeView_MouseLeave(object sender, EventArgs e)
+        {
+            _treeView.ShowPlusMinus = false;
+        }
+        private void _treeView_MouseHover(object sender, EventArgs e)
+        {
+            _treeView.ShowPlusMinus = true;
+        }
         private void _treeView_BeforeExpand(object sender, TreeViewCancelEventArgs e)
         {
             if (_treeView.SelectedNode != null)
@@ -476,6 +502,27 @@ namespace Droid_Explorer
                     childNode = childNode.NextNode;
                 }
                 _treeView.Invalidate();
+            }
+        }
+        private void _treeView_MouseClick(object sender, MouseEventArgs e)
+        {
+            var Test = _treeView.HitTest(e. Location);
+            if (Test.Location == TreeViewHitTestLocations.PlusMinus)
+            {
+                if (_treeView.SelectedNode != null)
+                {
+                    TreeNode tn = _treeView.SelectedNode;
+                    LoadSubNodes(ref tn, _toolControler.CurrentPath);
+
+                    TreeNode childNode = tn.FirstNode;
+                    while (childNode != null)
+                    {
+                        LoadSubNodes(ref childNode, _toolControler.CurrentPath + childNode.Text);
+                        childNode.Collapse();
+                        childNode = childNode.NextNode;
+                    }
+                    _treeView.Invalidate();
+                }
             }
         }
         #endregion

@@ -1544,7 +1544,7 @@ namespace Droid_Explorer
             }
             catch (Exception exp)
             {
-                Tools4Libraries.Log.write("[ ERR 0000 ] Error in context menu : " + exp.Message);
+                Tools4Libraries.Log.Write("[ ERR 0000 ] Error in context menu : " + exp.Message);
                 return uint.MinValue;
             }
         }
@@ -1562,7 +1562,7 @@ namespace Droid_Explorer
             }
             catch (Exception exp)
             {
-                Tools4Libraries.Log.write("[ ERR 0000 ] Error in context menu : " + exp.Message);
+                Tools4Libraries.Log.Write("[ ERR 0000 ] Error in context menu : " + exp.Message);
                 return uint.MinValue;
             }
         }

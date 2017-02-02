@@ -245,7 +245,7 @@ namespace Droid_Explorer
                 }
                 catch (Exception exp)
                 {
-                    Tools4Libraries.Log.write("[ ERR 0000 ] Error in special document loading : " + exp.Message);
+                    Tools4Libraries.Log.Write("[ ERR 0000 ] Error in special document loading : " + exp.Message);
                 }
             }
 
@@ -322,7 +322,7 @@ namespace Droid_Explorer
             }
             catch (Exception exp)
             {
-                Tools4Libraries.Log.write("[ ERR 0000 ] Error in nodes loading : " + exp.Message);
+                Tools4Libraries.Log.Write("[ ERR 0000 ] Error in nodes loading : " + exp.Message);
             }
         }
         private void LoadPreview()
@@ -432,7 +432,7 @@ namespace Droid_Explorer
             }
             catch (Exception exp)
             {
-                Tools4Libraries.Log.write("[ ERR 0000 ] Error in context menu execution : " + exp.Message);
+                Tools4Libraries.Log.Write("[ ERR 0000 ] Error in context menu execution : " + exp.Message);
             }
         }
         #endregion

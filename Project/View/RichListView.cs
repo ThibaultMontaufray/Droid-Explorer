@@ -156,10 +156,10 @@ namespace Droid_Explorer
             {
                 switch (ril.Details[i].DetFamily)
                 {
-                    case RichListViewItem.Family.Label:
+                    case RichListViewItem.Family.LABEL:
                         DrawComponentLabel(p, ril.Details[i].DetValue);
                         break;
-                    case RichListViewItem.Family.ProgressBar:
+                    case RichListViewItem.Family.PROGRESSBAR:
                         DrawComponentProgressBar(p, ril.Details[i].DetValue);
                         break;
                 }

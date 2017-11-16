@@ -104,19 +104,18 @@ namespace Droid_Explorer
                     Detail d;
 
                     d = new Detail();
-                    d.DetFamily = RichListViewItem.Family.ProgressBar;
+                    d.DetFamily = RichListViewItem.Family.PROGRESSBAR;
                     d.DetValue = (((item.totalSpace - item.freeSpace) * 100) / item.totalSpace).ToString();
                     richLV.Details.Add(d);
 
                     if (item.totalSpace > 0)
                     {
                         d = new Detail();
-                        d.DetFamily = RichListViewItem.Family.Label;
+                        d.DetFamily = RichListViewItem.Family.LABEL;
                         d.DetValue = (item.freeSpace / 1000000000).ToString() + " GB free of " + (item.totalSpace / 1000000000).ToString() + " GB";
                         richLV.Details.Add(d);
                     }
-
-                    // TODO : detect correctly the os folder
+                    
                     richLV.ImageIndex = richLV.Text.Contains(Environment.SystemDirectory.Split('\\')[0]) ? _listViewDisk.IconList.Images.IndexOfKey("diskOs") : _listViewDisk.IconList.Images.IndexOfKey("disk");
                     richLV.Group = lvg_fixed.Header;
                     countFixed++;
@@ -126,14 +125,14 @@ namespace Droid_Explorer
                     Detail d;
 
                     d = new Detail();
-                    d.DetFamily = RichListViewItem.Family.ProgressBar;
+                    d.DetFamily = RichListViewItem.Family.PROGRESSBAR;
                     d.DetValue = (((item.totalSpace - item.freeSpace) * 100) / item.totalSpace).ToString();
                     richLV.Details.Add(d);
 
                     if (item.totalSpace > 0)
                     {
                         d = new Detail();
-                        d.DetFamily = RichListViewItem.Family.Label;
+                        d.DetFamily = RichListViewItem.Family.LABEL;
                         d.DetValue = (item.freeSpace / 1000000000).ToString() + " GB free of " + (item.totalSpace / 1000000000).ToString() + " GB";
                         richLV.Details.Add(d);
                     }

@@ -26,8 +26,8 @@ namespace Droid_Explorer
         }
         public enum Family
         {
-            Label,
-            ProgressBar
+            LABEL,
+            PROGRESSBAR
         }
         #endregion
 
